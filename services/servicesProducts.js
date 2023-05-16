@@ -1,24 +1,17 @@
 const faker = require('faker')
 const boom = require('@hapi/boom')
+const sequelize = require('../libs/sequelize')
 
-const getAllProducts =  (req,res) =>{
+
+const getAllProducts =  async(req,res) =>{
     try {
-        const products = []
-    const {size} = req.query
-    const limit = size || 5
-    const {id} = req.params
-
-    for( let index = 0;index<limit;index++){
-        products.push({
-            'id':id,
-            name:faker.commerce.productName(),
-            price:parseInt(faker.commerce.price(),10),
-            image:faker.image.imageUrl(),
-        })
+    const query = 'SELECT * FROM tasks'
+    const [data] = await sequelize.query(query)
+    return {
+        data
     }
-    return products
     } catch (error) {
-     console.log(error)   
+     console.log(error)
     }
     
 }
