@@ -1,11 +1,52 @@
 const express = require('express');
 const router = express.Router()
-const servicesUsers = require('../services/servicesUsers')
+const servicesUsers = require('../services/servicesUsers');
 
 router.get('/', async (req,res,next) =>{
   try {
     const getUsers =  await servicesUsers.getAllUsers(req,res)
   return res.send({getUsers})
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.get('/:id', async (req,res,next) =>{
+  try {
+  const {id} = req.params
+  const oneUser = await servicesUsers.getOneUsers(id)
+  return res.json(oneUser)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.post('/', async(req,res,next) =>{
+  try {
+    const body = req.body
+    const newUser = await servicesUsers.createUser(body)
+    return newUser  
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.patch('/:id',async(req,res,next)=>{
+  try {
+    const {id} = req.params
+  const body = req.body
+  const updateUser = await servicesUsers.updateUser({id,body})
+  return res.json(updateUser)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.delete('/:id', async(req,res,next)=>{
+  try {
+    const {id} = req.params
+    const deleteUser = await servicesUsers.deleteUser({id})
+    return res.json(deleteUser)
   } catch (error) {
     next(error)
   }
