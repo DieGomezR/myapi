@@ -21,7 +21,13 @@ const UserSchema = {
         allowNull: false,
         type: DataTypes.DATE,
         field: 'create_at',
-        DefaultValue: Sequelize.NOW
+        defaultValue: Sequelize.NOW
+    },
+    role:{
+        allowNull: false,
+        type: DataTypes.STRING,
+        defaultValue: 'client'
+        
     }
 
 }
